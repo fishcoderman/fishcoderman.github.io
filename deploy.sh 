@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo "link server..."
+
 # 确保脚本具有执行权限
 chmod +x "$0"
 
