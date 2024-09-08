@@ -24,8 +24,11 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.DEPLOY_SSH_KEY }}  # 使用你的 SSH 私钥
 
-      - name: Add Aliyun IP to known_hosts
+      - name: Set up SSH
         run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.ALICLOUD_IP }} >> ~/.ssh/known_hosts
   
       - name: Verify SSH connection
