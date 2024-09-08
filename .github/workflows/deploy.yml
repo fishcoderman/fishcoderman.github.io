@@ -1,0 +1,18 @@
+name: Deploy to Aliyun
+
+on:
+  push:
+    branches:
+      - main  # 或者您希望部署的其他分支
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Deploy to Aliyun
+        run: |
+          ssh ${{ secrets.ALICLOUD_USER }}@${{ secrets.ALICLOUD_IP }} 'bash -s' < ./deploy.sh
