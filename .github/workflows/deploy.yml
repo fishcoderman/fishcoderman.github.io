@@ -13,13 +13,20 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Set up SSH
+      - name: Print environment variables
         run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H ${{ secrets.ALICLOUD_IP }} >> ~/.ssh/known_hosts
+        echo "ALICLOUD_IP is ${{ secrets.ALICLOUD_IP }}"
+        echo "SERVER_USER is ${{ secrets.ALICLOUD_USER }}"
 
-      - name: Deploy to Aliyun
+      - name: Set up SSH
+       uses: webfactory/ssh-agent@v0.5.3
+       with:
+        ssh-private-key: ${{ secrets.DEPLOY_SSH_KEY }}  # 使用你的 SSH 私钥
+
+      - name: Add Aliyun IP to known_hosts
         run: |
-          ssh ${{ secrets.ALICLOUD_USER }}@${{ secrets.ALICLOUD_IP }} 'bash -s' < ./deploy.sh
+          ssh-keyscan -H ${{ secrets.ALICLOUD_IP }} >> ~/.ssh/known_hosts
+  
+      - name: Verify SSH connection
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.ALICLOUD_USER }}@${{ secrets.ALICLOUD_IP }} "echo 'SSH connection successful!'"
