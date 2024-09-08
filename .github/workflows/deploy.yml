@@ -23,7 +23,7 @@ jobs:
         run: chmod +x $GITHUB_WORKSPACE/deploy_his.sh
 
 
-      - name: LIST PWD2
+      - name: LIST PWD31
         run: pwd
         
       - name: Set up SSH
