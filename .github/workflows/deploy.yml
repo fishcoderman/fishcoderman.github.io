@@ -27,4 +27,4 @@ jobs:
   
       - name: Verify SSH connection
         run: |
-           ssh ${{ secrets.ALICLOUD_USER }}@${{ secrets.ALICLOUD_IP }} 'bash -s' < deploy.sh
+           ssh ${{ secrets.ALICLOUD_USER }}@${{ secrets.ALICLOUD_IP }} 'bash -s' < $GITHUB_WORKSPACE/deploy.sh
