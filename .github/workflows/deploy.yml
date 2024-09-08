@@ -24,4 +24,4 @@ jobs:
   
       - name: Verify SSH connection
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.ALICLOUD_USER }}@${{ secrets.ALICLOUD_IP }} "echo 'SSH connection successful!'"
+           ssh ${{ secrets.ALICLOUD_USER }}@${{ secrets.ALICLOUD_IP }} 'bash -s' < ./deploy.sh
